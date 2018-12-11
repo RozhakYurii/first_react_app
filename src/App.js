@@ -1,28 +1,54 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import TestTable from "./components/TestDataTable/TestTable";
+import Background from "./components/Background/Background";
+import MyNavbar from "./components/Navbar/MyNavbar";
+import BsTable from "./components/TestDataTable/BsTable";
+import Prediction from "./components/Prediction/Prediction";
+import {Input} from "./components/Input/Input";
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+
+
+    constructor() {
+        super();
+        this.state = {
+            route: "input"
+        };
+    };
+
+    setRoute = (newRoute) => {
+        this.setState(
+            {
+                route: newRoute
+            }
+        )
+    };
+
+    renderSwitch() {
+        switch (this.state.route) {
+            case 'input':
+                return <Input/>;
+            case 'prediction':
+                return <Prediction/>;
+            case 'table':
+                return <TestTable/>;
+            case 'bootstrapTable':
+                return <BsTable/>;
+            default:
+                return <h2>KILL ME</h2>;
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                <MyNavbar setRoute={this.setRoute}/>
+                <Background/>
+                {this.renderSwitch()}
+            </div>
+        );
+    }
 }
 
 export default App;
